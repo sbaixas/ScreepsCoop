@@ -7,8 +7,17 @@ module.exports.loop = function () {
     var spawner_t = Game.spawns.Spawn1;    
     var room_t = spawner_t.room;
 
+    if(!Memory.roomStages)
+    {
+        Memory.roomStages = {};
+        for(var name in Game.rooms){
+            var room = Game.rooms[name];
+            Memory.roomStages[room] = 0;
+        }
+    }
 
-  for(var name in Memory.creeps) {
+
+    for(var name in Memory.creeps) {
         if(!Game.creeps[name]) {
             delete Memory.creeps[name];
             console.log('Clearing non-existing creep memory:', name);
@@ -56,7 +65,7 @@ module.exports.loop = function () {
         }
     }
     
-    if(screeps_count <7&& energy_available>250 ) {
+    if(screeps_count < 7 && energy_available > 250 ) {
         var newName = 'Harvester' + Game.time;
         console.log('Spawning new harvester: ' + newName);
         Game.spawns['Spawn1'].spawnCreep([WORK,CARRY,MOVE,CARRY], newName,
